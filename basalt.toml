@@ -1,0 +1,20 @@
+[package]
+name = 'bash-str'
+slug = 'bash_str'
+version = ''
+authors = ['Edwin Kofler <edwin@kofler.dev>']
+description = ''
+
+[run]
+dependencies = ['https://github.com/hyperupcall/bats-all.git@v4.1.0']
+sourceDirs = ['pkg/lib/public']
+builtinDirs = []
+binDirs = []
+completionDirs = []
+manDirs = []
+
+[run.shellEnvironment]
+
+[run.setOptions]
+
+[run.shoptOptions]
