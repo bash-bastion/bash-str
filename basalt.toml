@@ -3,7 +3,7 @@ name = 'bash-str'
 slug = 'bash_str'
 version = ''
 authors = ['Edwin Kofler <edwin@kofler.dev>']
-description = ''
+description = 'String manipulation functions for Bash'
 
 [run]
 dependencies = ['https://github.com/hyperupcall/bats-all.git@v4.1.0']

@@ -9,5 +9,5 @@ Everything between `strings.Contains()` and `strings.LastIndex()` have been impl
 Use [Basalt](https://github.com/hyperupcall/basalt), a Bash package manager, to add this project as a dependency
 
 ```sh
-basalt add 'hyperupcall/bash-object'
+basalt add 'hyperupcall/bash-str'
 ```
