@@ -1,7 +1,7 @@
 [package]
 name = 'bash-str'
 slug = 'bash_str'
-version = ''
+version = '0.1.0'
 authors = ['Edwin Kofler <edwin@kofler.dev>']
 description = 'String manipulation functions for Bash'
 
