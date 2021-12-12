@@ -2,7 +2,7 @@
 
 String manipulation functions for Bash. Modeled from Go's [strings](https://pkg.go.dev/strings) module
 
-Everything between `strings.Contains()` and `strings.LastIndex()` have been implemented
+Everything between `strings.Compare()` and `strings.ReplaceAll()` have been implemented
 
 ## Installation
 

@@ -1,24 +1,27 @@
 # shellcheck shell=bash
 
-# str.compare() {
-# 	unset REPLY; REPLY=
-# 	local str1="$1"
-# 	local str2="$2"
+str.compare() {
+	unset REPLY; REPLY=
+	local str1=$1
+	local str2=$2
 
-# 	# TODO: set locale?
-# 	# TODO: shopt -s nocaseglob, etc.
-# 	if [[ $str1 > "$str2" ]]; then
-# 		REPLY=1
-# 	elif [[ $str2 < "$str1" ]]; then
-# 		REPLY=-1
-# 	else
-# 		REPLY=0
-# 	fi
-# }
+	local old_collate="$LC_COLLATE" # TODO
+	LC_COLLATE='C'
+
+	if [[ $str1 > "$str2" ]]; then
+		REPLY=1
+	elif [[ $str1 < "$str2" ]]; then
+		REPLY=-1
+	else
+		REPLY=0
+	fi
+
+	LC_COLLATE="$old_collate"
+}
 
 str.contains() {
-	local str="$1"
-	local substr="$2"
+	local str=$1
+	local substr=$2
 
 	if [[ $str == *"$substr"* ]]; then
 		return 0
@@ -29,8 +32,8 @@ str.contains() {
 
 str.count() {
 	unset REPLY; REPLY=
-	local str="$1"
-	local substr="$2"
+	local str=$1
+	local substr=$2
 
 	# local s="${str//"$substr"}"
 	# REPLY="$(((${#str} - ${#s}) / ${#substr}))"
@@ -46,15 +49,15 @@ str.count() {
 
 str.fields() {
 	unset REPLY; REPLY=
-	local str="$1"
+	local str=$1
 
 	# TODO: fix hack
 	REPLY=($str)
 }
 
 str.has_prefix() {
-	local str="$1"
-	local prefix="$2"
+	local str=$1
+	local prefix=$2
 
 	if [[ $str == "$prefix"* ]]; then
 		return 0
@@ -64,8 +67,8 @@ str.has_prefix() {
 }
 
 str.has_suffix() {
-	local str="$1"
-	local prefix="$2"
+	local str=$1
+	local prefix=$2
 
 	if [[ "$str" == *"$prefix" ]]; then
 		return 0
@@ -75,8 +78,8 @@ str.has_suffix() {
 }
 
 str.index() {
-	local str="$1"
-	local substr="$2"
+	local str=$1
+	local substr=$2
 
 	local rest="${str#*$substr}"
 	if ((${#rest} == ${#str})); then
@@ -88,8 +91,8 @@ str.index() {
 
 str.join() {
 	unset REPLY; REPLY=
-	local arr_name="$1"
-	local sep="$2"
+	local arr_name=$1
+	local sep=$2
 
 	local -n __arr="$arr_name"
 	local i= item=
@@ -104,8 +107,8 @@ str.join() {
 
 str.last_index() {
 	unset REPLY; REPLY=
-	local str="$1"
-	local substr="$2"
+	local str=$1
+	local substr=$2
 
 	local rest="${str##*$substr}"
 	if ((${#rest} == ${#str})); then
@@ -113,4 +116,44 @@ str.last_index() {
 	else
 		REPLY=$(( ${#str} - ${#rest} - ${#substr} ))
 	fi
+}
+
+str.repeat() {
+	unset REPLY; REPLY=
+	local str=$1
+	local -i count=$2
+
+	local i=
+	for ((i=0; i<count; ++i)); do
+		REPLY+="$str"
+	done; unset i
+}
+
+# TODO: behavior differes from Go (will replace overlapping strings)
+str.replace() {
+	unset REPLY; REPLY=
+	local str=$1
+	local old=$2
+	local new=$3
+	local -i count=$4
+
+	if ((count < 0)); then
+		REPLY="${str//"$old"/"$new"}"
+	else
+		local i=
+		for ((i=0; i<count; ++i)); do
+			REPLY="${str/"$old"/"$new"}"
+		done; unset i
+	fi
+
+}
+
+# TODO: behavior differes from Go (will replace overlapping strings)
+str.replace_all() {
+	unset REPLY; REPLY=
+	local str=$1
+	local old=$2
+	local new=$3
+
+	REPLY="${str//"$old"/"$new"}"
 }
